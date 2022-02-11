@@ -14,6 +14,13 @@ export function updateHostComponent(wip) {
   reconcileChildren(wip, wip.props.children)
 }
 
+// 更新函数组件
+export function updateFunctionComponent(wip) {
+  const { type, props } = wip
+  const children = type(props)
+  reconcileChildren(wip, children)
+}
+
 function reconcileChildren(wip, children) {
   if (isStringOrNumber(children)) {
     return

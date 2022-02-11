@@ -1,23 +1,23 @@
 // import React from "react";
 // import ReactDOM from "react-dom";
 // import { ReactDOM, Component, useReducer, useState } from "../which-react";
-import { ReactDOM } from "../which-react";
+import { ReactDOM } from '../which-react'
 
-import "./index.css";
+import './index.css'
 
 function FunctionComponent(props) {
-  const [count, setCount] = useReducer((x) => x + 1, 0);
-  const [count2, setCount2] = useState(0);
+  // const [count, setCount] = useReducer(x => x + 1, 0)
+  // const [count2, setCount2] = useState(0)
 
   return (
     <div className="border">
       <p>{props.name}</p>
-      <button onClick={() => setCount()}>{count}</button>
+      {/* <button onClick={() => setCount()}>{count}</button>
       <button onClick={() => setCount2(count2 + 1)}>{count2}</button>
 
-      {count % 2 ? <div>omg</div> : <span>o</span>}
+      {count % 2 ? <div>omg</div> : <span>o</span>} */}
     </div>
-  );
+  )
 }
 
 // class ClassComponent extends Component {
@@ -39,20 +39,20 @@ function FragmentComponent() {
         <li>part2</li>
       </>
     </ul>
-  );
+  )
 }
 
 const jsx = (
   <div className="border">
     <h1>react</h1>
     <a href="https://github.com/bubucuo/mini-react">mini react</a>
-    {/* <FunctionComponent name="函数组件" />
-    <ClassComponent name="类组件" />
+    <FunctionComponent name="函数组件" />
+    {/* <ClassComponent name="类组件" />
     <FragmentComponent /> */}
   </div>
-);
+)
 
-ReactDOM.createRoot(document.getElementById("root")).render(jsx);
+ReactDOM.createRoot(document.getElementById('root')).render(jsx)
 
 // 实现了常见组件初次渲染
 
