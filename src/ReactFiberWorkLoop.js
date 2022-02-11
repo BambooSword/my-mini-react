@@ -2,6 +2,7 @@ import { isFn, isStr, Placement } from './utils'
 import {
   updateHostComponent,
   updateFunctionComponent,
+  updateClassComponent,
 } from './ReactFiberReconciler'
 // work in progress
 let wip = null
@@ -20,7 +21,9 @@ function performUnitOfWork() {
     updateHostComponent(wip) // 1
   } else if (isFn(type)) {
     // 函数组件
-    updateFunctionComponent(wip)
+    type.prototype.isReactComponent
+      ? updateClassComponent(wip)
+      : updateFunctionComponent(wip)
   }
   // 2
   // 深度优先遍历
@@ -75,11 +78,11 @@ function commitWorker(wip) {
 }
 
 function getParentNode(wip) {
-  let tem = wip;
-  while(tem) {
-    if(tem.stateNode) {
+  let tem = wip
+  while (tem) {
+    if (tem.stateNode) {
       return tem.stateNode
     }
-    tem = tem.return;
+    tem = tem.return
   }
 }
