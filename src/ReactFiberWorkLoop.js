@@ -1,8 +1,18 @@
 import { isFn, isStr, Placement } from './utils'
 import {
+  ClassComponent,
+  FunctionComponent,
+  HostComponent,
+  HostText,
+  Fragment,
+} from './ReactWorkTags'
+
+import {
   updateHostComponent,
   updateFunctionComponent,
   updateClassComponent,
+  updateText,
+  updateFragmentComponent,
 } from './ReactFiberReconciler'
 // work in progress
 let wip = null
@@ -16,14 +26,24 @@ export function scheduleUpdateOnFiber(fiber) {
 // 1. 执行当前wip任务
 // 2. 更新wip
 function performUnitOfWork() {
-  const { type } = wip
-  if (isStr(type)) {
-    updateHostComponent(wip) // 1
-  } else if (isFn(type)) {
-    // 函数组件
-    type.prototype.isReactComponent
-      ? updateClassComponent(wip)
-      : updateFunctionComponent(wip)
+  const { tag } = wip
+  switch (tag) {
+    case HostComponent:
+      updateHostComponent(wip)
+      break
+    case FunctionComponent:
+      updateFunctionComponent(wip)
+      break
+    case ClassComponent:
+      updateClassComponent(wip)
+      break
+    case HostText:
+      updateText(wip)
+    case Fragment:
+      updateFragmentComponent(wip)
+
+    default:
+      break
   }
   // 2
   // 深度优先遍历

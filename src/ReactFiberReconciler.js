@@ -10,7 +10,6 @@ export function updateHostComponent(wip) {
   }
   console.log('wip in updateHostComponent', wip)
   // 遍历子节点
-
   reconcileChildren(wip, wip.props.children)
 }
 
@@ -19,6 +18,14 @@ export function updateFunctionComponent(wip) {
   const { type, props } = wip
   const children = type(props)
   reconcileChildren(wip, children)
+}
+
+export function updateText(wip) {
+  wip.stateNode = document.createTextNode(wip.props.children)
+}
+export function updateFragmentComponent(wip) {
+  console.log(wip, 'updateFragmentComponent', wip.return)
+  reconcileChildren(wip, wip.props.children)
 }
 
 export function updateClassComponent(wip) {
