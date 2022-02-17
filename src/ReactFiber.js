@@ -17,6 +17,8 @@ export function createFiber(vnode, returnFiber) {
     return: returnFiber, // father fiber
     flags: Placement, // 标记fiber任务类型，节点插入、更新、删除
     index: null,
+
+    alternate: null, // older fiber
   }
 
   const { type } = vnode
