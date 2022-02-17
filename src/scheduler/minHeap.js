@@ -1,17 +1,14 @@
-// export
-function peek(heap) {
+export function peek(heap) {
   return heap.length === 0 ? null : heap[0]
 }
 
-// export
-function push(heap, node) {
+export function push(heap, node) {
   const len = heap.length
   heap.push(node)
   bubbleUp(heap, node, len)
 }
 
-// export
-function pop(heap) {
+export function pop(heap) {
   if (heap.length === 0) {
     return null
   }
@@ -28,7 +25,6 @@ function bubbleDown(heap, i) {
   // console.log(heap)
   let index = i
   const len = heap.length
-  const halfLen = len >> 1
   while (index < len - 1) {
     const left = index * 2 + 1
     const right = left + 1
@@ -67,23 +63,23 @@ function bubbleUp(heap, node, i) {
 }
 
 function compare(a, b) {
-  // const diff = a.sortIndex - b.sortIndex
-  // return diff !== 0 ? diff : a.id - b.id
-  return a - b
+  const diff = a.sortIndex - b.sortIndex
+  return diff !== 0 ? diff : a.id - b.id
+  // return a - b
 }
 
-function build(arr) {
-  if (arr.length < 2) return arr
-  for (let i = arr.length >> 1; i >= 0; i--) {
-    bubbleDown(arr, i)
-  }
-}
-const a = [9, 7, 4, 10, 12, 100, 6, 15, 1]
-build(a)
-while (1) {
-  if (a.length === 0) {
-    break
-  }
-  console.log('a', peek(a))
-  pop(a)
-}
+// function build(arr) {
+//   if (arr.length < 2) return arr
+//   for (let i = arr.length >> 1; i >= 0; i--) {
+//     bubbleDown(arr, i)
+//   }
+// }
+// const a = [9, 7, 4, 10, 12, 100, 6, 15, 1]
+// build(a)
+// while (1) {
+//   if (a.length === 0) {
+//     break
+//   }
+//   console.log('a', peek(a))
+//   pop(a)
+// }

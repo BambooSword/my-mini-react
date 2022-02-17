@@ -14,6 +14,8 @@ import {
   updateText,
   updateFragmentComponent,
 } from './ReactFiberReconciler'
+
+import { scheduleCallback } from './scheduler'
 // work in progress
 let wip = null
 let wipRoot = null
@@ -21,6 +23,7 @@ let wipRoot = null
 export function scheduleUpdateOnFiber(fiber) {
   wip = fiber
   wipRoot = fiber
+  scheduleCallback(workLoop)
 }
 
 // 1. 执行当前wip任务
@@ -63,9 +66,8 @@ function performUnitOfWork() {
   }
   wip = null
 }
-
-function workLoop(IdleDeadline) {
-  while (wip && IdleDeadline.timeRemaining() > 0) {
+function workLoop() {
+  while (wip) {
     performUnitOfWork()
   }
   if (!wip && wipRoot) {
@@ -73,7 +75,6 @@ function workLoop(IdleDeadline) {
   }
 }
 
-requestIdleCallback(workLoop)
 
 function commitRoot() {
   commitWorker(wipRoot)
