@@ -30,9 +30,16 @@ export function isArray(arr) {
 
 export function updateNode(node, preVal, nextVal) {
   Object.keys(preVal).forEach(k => {
-    if (k.slice(0, 2) === 'on') {
+    if (k === 'children') {
+      // 有可能是文本
+      if (isStringOrNumber(nextVal[k])) {
+        node.textContent = ''
+      }
+    } else if (k.slice(0, 2) === 'on') {
       const eventName = k.slice(2).toLocaleLowerCase()
       node.removeEventListener(eventName, preVal[k])
+    } else {
+      node[k] = ''
     }
   })
 

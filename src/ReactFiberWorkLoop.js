@@ -93,6 +93,11 @@ function commitWorker(wip) {
   if (flags & Update && stateNode) {
     updateNode(stateNode, wip.alternate.props, wip.props)
   }
+  //
+  if (wip.deletions) {
+    commitDeletion(wip.deletions, stateNode || parentNode)
+  }
+
   // 2. 更新子节点
   commitWorker(wip.child)
   // 3.更新兄弟节点
@@ -107,4 +112,31 @@ function getParentNode(wip) {
     }
     tem = tem.return
   }
+}
+
+/**
+ * delete the oldChildrenNode from parentNode
+ * @param {fiber[]} deletions
+ * @param {node} parentNode
+ */
+
+function commitDeletion(deletions, parentNode) {
+  for (let i = 0; i < deletions.length; i++) {
+    const deletion = deletions[i]
+    parentNode.removeChild(getStateNode(deletion))
+  }
+}
+
+/**
+ * find the stateNode of the fiber or the fiber's child
+ * @param {fiber} fiber 
+ * @returns 
+ */
+function getStateNode(fiber) {
+  let tem = fiber
+  while (!tem.stateNode) {
+    tem = tem.child
+  }
+
+  return tem.stateNode
 }
