@@ -60,26 +60,11 @@ export function useReducer(reducer, initialState) {
   return [hook.memorizedState, dispatch]
 }
 export function useState(initialState) {
-  const hook = updateWorkInProgressHook()
-  console.log('hello reducer', currentlyRenderingFiber)
-  if (!currentlyRenderingFiber.alternate) {
-    // initial
-    hook.memorizedState = initialState
-  }
-  const setState = runSetState.bind(null, currentlyRenderingFiber, hook)
-
-  return [hook.memorizedState, setState]
+  return useReducer(null, initialState)
 }
 
-function dispatchReducerAction(fiber, hook, reducer) {
-  hook.memorizedState = reducer(hook.memorizedState)
-  fiber.alternate = { ...fiber }
-  fiber.sibling = null
-  scheduleUpdateOnFiber(fiber)
-  // fiber.sibling =
-}
-function runSetState(fiber, hook, val) {
-  hook.memorizedState = val
+function dispatchReducerAction(fiber, hook, reducer, action) {
+  hook.memorizedState = reducer ? reducer(hook.memorizedState) : action
   fiber.alternate = { ...fiber }
   fiber.sibling = null
   scheduleUpdateOnFiber(fiber)
