@@ -1,4 +1,4 @@
-import { isFn, isStr, Placement } from './utils'
+import { isFn, isStr, Placement, Update, updateNode } from './utils'
 import {
   ClassComponent,
   FunctionComponent,
@@ -75,7 +75,6 @@ function workLoop() {
   }
 }
 
-
 function commitRoot() {
   commitWorker(wipRoot)
   wipRoot = null // 执行完置空，否则会死循环
@@ -88,9 +87,11 @@ function commitWorker(wip) {
   // 由于函数组件不是真实节点，所以wip.return.stateNode可能为null，我们要写一个函数来获取真正的dom意义上的父节点
   let parentNode = getParentNode(wip.return) // wip.return.stateNode
 
-  console.log('flags & Placement', flags)
   if (flags & Placement && stateNode) {
     parentNode.appendChild(stateNode)
+  }
+  if (flags & Update && stateNode) {
+    updateNode(stateNode, wip.alternate.props, wip.props)
   }
   // 2. 更新子节点
   commitWorker(wip.child)

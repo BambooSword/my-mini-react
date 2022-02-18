@@ -7,13 +7,13 @@ import './index.css'
 
 function FunctionComponent(props) {
   const [count, setCount] = useReducer(x => x + 1, 0)
-  // const [count2, setCount2] = useState(0)
+  const [count2, setCount2] = useState(0)
 
   return (
     <div className="border">
       <p>{props.name}</p>
       <button onClick={() => setCount()}>{count}</button>
-      {/* <button onClick={() => setCount2(count2 + 1)}>{count2}</button> */}
+      <button onClick={() => setCount2(count2 + 1)}>{count2}</button>
 
       {count % 2 ? <div>omg</div> : <span>o</span>}
     </div>
